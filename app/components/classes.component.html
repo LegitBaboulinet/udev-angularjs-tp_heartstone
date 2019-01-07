@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Sélectionnez une classe
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a class="className list-group-item"
+                ng-repeat="className in $ctrl.classNames"
+                ng-click="$ctrl.selectClass(className)"                
+                ng-class="{active: $ctrl.currentClass == className}">
+                    {{ className }}
+            </a>
+        </div>
+        
+        <div class="loader" ng-if="$ctrl.isLoading"></div>
+    </div>
+</div>
