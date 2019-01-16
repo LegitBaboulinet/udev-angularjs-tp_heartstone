@@ -1,27 +1,27 @@
 (function(){
     'use strict';
 
-    angular
-        .module('hsApp')
-        .service('classesService', Service)
+    var app = angular.module('hsApp');
+    app.service('classesService', classesService);
 
     /** @ngInject */
-    function Service($http){
+    function classesService($http, serverUrl, apiToken){
         var service = this;
 
         /** Variables */
 
         /** Fonctions */
         service.get = function() {
-            $http.get(
-                angular.module('hsApp').value('serverUrl') + '/info',
-                {'X-RapidAPI-Key': '3sFrE3cDwsmsh5zseH4I2AF3eM98p1OCtmUjsnuqwg9LuK09ct'}
+            return $http.get(
+                serverUrl + '/info',
+                {'X-RapidAPI-Key': apiToken}
             ).then(
-                function (results) {
-                    console.log(results);
+                function (res) {
+                    var classes = res.data.classes;
+                    return (classes) ? classes : new Error('Erreur lors de la communication avec l\'API');
                 },
-                function (error) {
-                    console.log(error);
+                function (err) {
+                    console.log(err);
                 }
             );
         }

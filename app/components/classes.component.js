@@ -3,26 +3,30 @@
 
     angular
         .module ('hsApp')
-        .component ('hsClasses', component());
-
-
-    function component() {
-
-        function componentController(){
-            var vm = this;
-            
-            /** Variables */
-
-            /** Fonctions */
-        }
-
-        return {
+        .component ('hsClasses', {
             bindings: {
                 currentClass: '='
             },
             controller: componentController,
-            controllerAs: '${ctrl}'
+            templateUrl: "app/components/classes.component.html"
+        });
+
+        function componentController(classesService){
+            var vm = this;
+            
+            /** Variables */
+            vm.classes = [];
+
+            /** Fonctions */
+            vm.$onInit = function() {
+                classesService.get()
+                .then(
+                    function(classes) {
+                        vm.classes = classes;
+                    }
+                );
+            }
+            
         }
-    }
 
 } ());
